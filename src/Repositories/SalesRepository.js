@@ -50,6 +50,19 @@ class SalesRepository{
             return null
         }
     }
+
+    static async getByMonth(month,idBusiness){
+        const sql = `SELECT * FROM vendas WHERE id_negocio = ? AND MONTH(data) = ? AND YEAR(data) = 2025`
+
+        try{
+            const [sales] = await db.execute(sql,[idBusiness,month])
+
+            return sales.length > 0 ? sales : null
+        }catch(err){
+            console.error("Ocorreu um erro ao buscar vendas por mês ",err)
+            return null
+        }
+    }
 }
 
 module.exports = SalesRepository

@@ -8,6 +8,8 @@ router.post("/user",UserController.create)
 
 router.post("/login", UserController.login)
 
+router.get("/sale/:month/:idBusiness",SalesController.getByMonth)
+
 router.post("/sale",AuthMiddleware,SalesController.create)
 
 router.post("/filtersales/:idBusiness",AuthMiddleware,SalesController.filterSales)

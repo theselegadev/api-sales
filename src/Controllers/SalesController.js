@@ -19,6 +19,15 @@ class SalesController{
 
         res.status(404).send(Response.error("Nenhuma venda encontrada"))
     }
+
+    static async getByMonth(req,res){
+        const sales = await SalesRepository.getByMonth(req.params.month,req.params.idBusiness)
+
+        if(sales)
+            return res.status(200).send(Response.success("Vendas retornadas com sucesso", sales))
+
+        return res.status(404).send(Response.error("Nenhuma venda encontrada"))
+    }
 }
 
 module.exports = SalesController
