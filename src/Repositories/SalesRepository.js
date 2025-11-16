@@ -18,7 +18,7 @@ class SalesRepository{
     }
 
     static async filterSales({product,value,client,date},idBusiness){
-        let sql = `SELECT * FROM vendas WHERE id_negocio = ? `
+        let sql = `SELECT tipo,produto,valor,cliente,data FROM vendas WHERE id_negocio = ? `
         const values = [idBusiness]
 
         if(product){
@@ -52,7 +52,7 @@ class SalesRepository{
     }
 
     static async getByMonth(month,idBusiness){
-        const sql = `SELECT * FROM vendas WHERE id_negocio = ? AND MONTH(data) = ? AND YEAR(data) = 2025`
+        const sql = `SELECT tipo,produto,valor,cliente,data FROM vendas WHERE id_negocio = ? AND MONTH(data) = ? AND YEAR(data) = 2025`
 
         try{
             const [sales] = await db.execute(sql,[idBusiness,month])
@@ -60,6 +60,19 @@ class SalesRepository{
             return sales.length > 0 ? sales : null
         }catch(err){
             console.error("Ocorreu um erro ao buscar vendas por mês ",err)
+            return null
+        }
+    }
+
+    static async getAll(idBusiness){
+        const sql = `SELECT tipo,produto,valor,cliente,data FROM vendas WHERE id_negocio = ?`
+
+        try{
+            const [sales] = await db.execute(sql,[idBusiness])
+
+            return sales.length > 0 ? sales : null
+        }catch(err){
+            console.error("Ocorreu um erro ao buscar todas as vendas ",err)
             return null
         }
     }
